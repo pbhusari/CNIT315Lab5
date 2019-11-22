@@ -94,45 +94,56 @@ struct Node *enqueue(struct Node *queueFront, char *firstName, char *lastName, i
 
 // LAB SPECIFIED: Deletes an item at the end of a linked list
 struct Node *dequeue(struct Node *queueFront) {
+    int deleteIndex = size(queueFront);
+
     struct Node *tempNode = queueFront;
-    struct Node *t;
 
     // Traverses to the end of the linked list
-    while (tempNode->next != NULL) {
-        t = tempNode;
+    for (int i = 0; i < deleteIndex - 2; i++) {
         tempNode = tempNode->next;
     }
 
     // Deletes the value
-    free(t->next);
-    t->next = NULL;
-
+    tempNode->next = NULL;
 
     return queueFront;
 
+
 }
 
+struct Node *emptyStack(struct Node *stackTop) {
+    while (!empty(stackTop)) {
+        stackTop = pop(stackTop);
+    }
+
+    return stackTop;
+}
+
+struct Node *emptyQueue(struct Node *queueFront) {
+    while (!empty(queueFront)) {
+        queueFront = dequeue(queueFront);
+    }
+
+    return queueFront;
+}
 
 
 int main() {
 
-/*
+    // LIFO
     struct Node *stackTop = CreateListNode("AAAA", "aaa", 11, 1111);
     stackTop = push(stackTop, "BBBB", "bbb", 22, 2222);
     stackTop = push(stackTop, "CCCC", "ccc", 33, 3333);
-    printList(stackTop);
     stackTop = pop(stackTop);
-    stackTop = pop(stackTop);
-    _Bool isEmpty = empty(stackTop);
-    stackTop = pop(stackTop);
-    int stackSize = size(stackTop);
-    isEmpty = empty(stackTop);
-*/
+    stackTop = emptyStack(stackTop);
 
+    // FIFO
     struct Node *queueFront = CreateListNode("AAAA", "aaa", 11, 1111);
     queueFront = enqueue(queueFront, "BBBB", "bbb", 22, 2222);
     queueFront = enqueue(queueFront, "CCCC", "ccc", 33, 3333);
-    dequeue(queueFront);
+    queueFront = dequeue(queueFront);
+    queueFront = emptyQueue(queueFront);
+
 
 
 
